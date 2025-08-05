@@ -1,0 +1,395 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #121214;
+  --card: #1E1E20;
+  --border: #2A2A2D;
+  --text-primary: #FFFFFF;
+  --text-secondary: #B8B8B8;
+  --accent: #CABD95;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background);
+  color: var(--text-primary);
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@layer components {
+  .input {
+    @apply bg-[#242424] border border-[#2A2A2D] rounded-lg px-4 py-3 text-white w-full focus:outline-none focus:ring-2 focus:ring-[#CABD95] focus:border-transparent transition-all duration-200 text-base;
+    min-height: 44px;
+    font-size: 16px;
+  }
+  
+  .select {
+    @apply bg-[#242424] border border-[#2A2A2D] rounded-lg px-4 py-3 text-white w-full focus:outline-none focus:ring-2 focus:ring-[#CABD95] focus:border-transparent appearance-none transition-all duration-200 text-base;
+    min-height: 44px;
+    font-size: 16px;
+    background-image: none;
+  }
+
+  .select option {
+    @apply bg-[#242424] text-white;
+  }
+
+  .btn-primary {
+    @apply bg-[#CABD95] text-[#161616] font-medium px-6 py-2 rounded-full hover:bg-opacity-90 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-base;
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .card {
+    @apply bg-[#242424] rounded-lg border border-[#2A2A2D] p-4 md:p-6;
+  }
+
+  .card-selected {
+    @apply border-[#CABD95] text-[#CABD95];
+  }
+
+  .service-card {
+    @apply w-full text-left p-6 rounded-xl transition-all duration-300 border-2 relative overflow-hidden;
+    background: linear-gradient(135deg, #242424 0%, #1E1E20 100%);
+    border-color: transparent;
+  }
+
+  .service-card:hover {
+    @apply border-[#CABD95]/50 transform scale-[1.02];
+    box-shadow: 0 8px 32px rgba(202, 189, 149, 0.1);
+  }
+
+  .service-card.selected {
+    @apply border-[#CABD95] text-[#CABD95];
+    background: linear-gradient(135deg, #2A2A2D 0%, #242424 100%);
+    box-shadow: 0 12px 40px rgba(202, 189, 149, 0.2);
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #CABD95, #D4C7A0);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .service-card.selected::before {
+    opacity: 1;
+  }
+
+  .service-icon {
+    @apply w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300;
+    background: linear-gradient(135deg, #CABD95 0%, #D4C7A0 100%);
+  }
+
+  .service-card:hover .service-icon {
+    @apply transform scale-110;
+  }
+
+  /* Currency input specific styles */
+  .currency-input-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  /* Currency symbol positioning */
+  .currency-symbol-position {
+    left: 12px !important;
+  }
+
+  /* Currency input field with responsive padding - usando !important para sobrescrever Tailwind */
+  .currency-input-field-custom {
+    @apply bg-[#242424] border border-[#2A2A2D] rounded-lg text-white w-full focus:outline-none focus:ring-2 focus:ring-[#CABD95] focus:border-transparent transition-all duration-200 text-base;
+    min-height: 44px;
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    padding-right: 16px !important;
+    
+    /* Desktop - espaçamento adequado */
+    padding-left: 38px !important;
+  }
+
+  /* Tablet - aumentar padding para evitar sobreposição */
+  @media (max-width: 768px) {
+    .currency-input-field-custom {
+      padding-left: 48px !important;
+      font-size: 16px !important;
+      min-height: 48px !important;
+    }
+    
+    .currency-symbol-position {
+      left: 12px !important;
+      font-size: 14px !important;
+    }
+  }
+
+  /* Mobile pequeno - máximo padding para evitar sobreposição */
+  @media (max-width: 480px) {
+    .currency-input-field-custom {
+      padding-left: 52px !important;
+    }
+    
+    .currency-symbol-position {
+      left: 12px !important;
+      font-size: 13px !important;
+    }
+  }
+
+  /* Mobile muito pequeno - proteção extra */
+  @media (max-width: 375px) {
+    .currency-input-field-custom {
+      padding-left: 56px !important;
+    }
+    
+    .currency-symbol-position {
+      left: 10px !important;
+    }
+  }
+
+  /* Prevent text selection on currency symbol */
+  .currency-input-container span {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 20;
+  }
+}
+
+/* Touch-friendly adjustments */
+@media (max-width: 768px) {
+  /* Ensure proper viewport handling */
+  html {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+  }
+
+  body {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  .checkbox-list > div,
+  .radio-list > div {
+    margin-bottom: 12px;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  button {
+    min-height: 44px;
+  }
+
+  .input-label {
+    font-weight: 500;
+  }
+
+  .important-text {
+    font-weight: 700;
+  }
+
+  .service-card {
+    padding: 20px;
+  }
+
+  /* Better spacing for mobile */
+  .space-y-6 > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+
+  /* Improve form elements on mobile */
+  .input, .select {
+    font-size: 16px; /* Prevent zoom on iOS */
+    padding: 12px 16px;
+    min-height: 48px;
+  }
+
+  /* Better button sizing */
+  .btn-primary {
+    min-height: 48px;
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  /* Improve grid layouts */
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .grid-cols-3 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Better card spacing */
+  .card {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Improve navigation buttons */
+  .navigation-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .navigation-buttons button {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .navigation-buttons {
+    margin-top: 16px;
+  }
+
+  .btn-primary {
+    padding: 8px 16px;
+  }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /* Tablet-specific grid adjustments */
+  .grid-cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .service-card {
+    padding: 24px;
+  }
+}
+
+/* Ensure footer is always at bottom */
+.min-h-screen {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
+}
+
+/* Layout adjustments for footer positioning */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+
+/* Ensure proper spacing on mobile */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding-bottom: 0.5rem;
+  }
+  
+  .main-content {
+    min-height: calc(100vh - 100px); /* Account for footer height */
+  }
+
+  /* Mobile-specific header adjustments */
+  header {
+    padding: 16px 0;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  /* Better mobile summary panel */
+  .mobile-summary-panel {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  /* Improve currency input on mobile */
+  .currency-input {
+    font-size: 16px;
+  }
+
+  /* Better toggle switches for mobile */
+  .toggle-switch {
+    min-width: 56px;
+    min-height: 32px;
+  }
+
+  .toggle-switch .toggle-thumb {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Compact layout for better space utilization */
+.container {
+  max-width: 1200px;
+}
+
+@media (min-width: 1024px) {
+  .content-wrapper {
+    padding-bottom: 0.5rem;
+  }
+}
